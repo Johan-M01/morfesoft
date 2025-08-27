@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Panel de {{ user.email }}</h2>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Mi cuenta</h5>
+        <a href="{{ url_for('dashboard.account') }}" class="btn btn-info">Ver</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Salir</h5>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-danger">Cerrar sesión</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,3 @@
+# PATCH in app.py: add booking blueprint
+from booking.routes import booking_bp
+app.register_blueprint(booking_bp, url_prefix="/booking")

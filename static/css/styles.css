@@ -1,0 +1,17 @@
+:root{
+  --ms-primary:#2f81f7;
+}
+.brand-badge{
+  display:inline-grid;place-items:center;
+  width:32px;height:32px;border-radius:10px;
+  background:linear-gradient(135deg,var(--ms-primary),#7aa7ff);
+  color:#0d1117;font-weight:800;
+}
+.hero{
+  background: radial-gradient(1200px 600px at -10% -30%, #2f81f722, transparent),
+              radial-gradient(1200px 600px at 110% 140%, #7aa7ff22, transparent);
+  border:1px solid rgba(255,255,255,.06);
+}
+.glass{background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08)}
+.shadow-hover{transition:transform .08s ease, box-shadow .2s ease}
+.shadow-hover:hover{transform:translateY(-2px); box-shadow:0 .5rem 1rem rgba(0,0,0,.15)}

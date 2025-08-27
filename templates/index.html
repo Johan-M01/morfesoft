@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero bg-gradient rounded-4 p-5 shadow-sm mb-4">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-7">
+      <h1 class="display-5 fw-bold mb-3">Agenda simple, <span class="text-primary">productividad total</span></h1>
+      <p class="lead text-body-secondary mb-4">Crea tu panel, define servicios y comparte tu link de reservas. Hecho con Flask + Bootstrap 5.</p>
+      <div class="d-flex gap-2">
+        {% if current_user.is_authenticated %}
+          <a class="btn btn-primary btn-lg" href="{{ url_for('dashboard.dashboard') }}">Ir al Dashboard</a>
+          <a class="btn btn-outline-light btn-lg" href="{{ url_for('dashboard.account') }}">Configurar cuenta</a>
+        {% else %}
+          <a class="btn btn-primary btn-lg" href="{{ url_for('auth.register') }}">Probar gratis</a>
+          <a class="btn btn-outline-light btn-lg" href="{{ url_for('auth.login') }}">Ya tengo cuenta</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="glass rounded-4 p-4">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="brand-badge fs-4">M</div>
+          <div>
+            <div class="fw-bold">MorfeSoft</div>
+            <div class="text-body-secondary small">SaaS de reservas</div>
+          </div>
+        </div>
+        <ul class="list-unstyled m-0 text-body-secondary">
+          <li class="mb-2">✔️ Servicios con duración y depósito opcional</li>
+          <li class="mb-2">✔️ Disponibilidad por día y franja horaria</li>
+          <li class="mb-2">✔️ Link público listo para compartir</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="row g-3">
+  <div class="col-md-4">
+    <div class="card h-100 shadow-hover">
+      <div class="card-body">
+        <h5 class="card-title">Servicios</h5>
+        <p class="card-text text-body-secondary">Crea y gestiona lo que ofreces.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100 shadow-hover">
+      <div class="card-body">
+        <h5 class="card-title">Disponibilidad</h5>
+        <p class="card-text text-body-secondary">Define tus horarios semanales.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100 shadow-hover">
+      <div class="card-body">
+        <h5 class="card-title">Reservas</h5>
+        <p class="card-text text-body-secondary">Comparte tu página pública.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

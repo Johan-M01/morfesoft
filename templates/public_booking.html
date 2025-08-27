@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-3">{{ biz.name }} — Reservar</h2>
+<form class="row g-3 mb-3" method="get">
+  <div class="col-auto">
+    <input type="date" class="form-control" name="date" value="{{ day.strftime('%Y-%m-%d') }}">
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-outline-light">Cambiar día</button>
+  </div>
+</form>
+
+<form method="post" action="{{ url_for('booking.book', slug=biz.slug) }}" class="vstack gap-3">
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label class="form-label">Tu nombre</label>
+      <input class="form-control" name="name" required>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Teléfono</label>
+      <input class="form-control" name="phone">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Servicio</label>
+      <select class="form-select" name="service_id" required>
+        {% for s in services %}
+          <option value="{{ s.id }}">{{ s.name }} ({{ s.duration_minutes }} min)</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div>
+    <label class="form-label">Horarios disponibles para {{ day.strftime('%Y-%m-%d') }}</label>
+    <div class="d-flex flex-wrap gap-2">
+      {% for s in slots %}
+        <label class="btn btn-outline-primary">
+          <input type="radio" class="btn-check" name="start_at" value="{{ s.isoformat() }}" required> {{ s.strftime('%H:%M') }}
+        </label>
+      {% else %}
+        <div class="text-body-secondary">No hay horarios. Prueba otro día.</div>
+      {% endfor %}
+    </div>
+  </div>
+  <button class="btn btn-success btn-lg">Confirmar reserva</button>
+</form>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-3">Disponibilidad</h2>
+<form method="post" class="row g-3 mb-4">
+  <div class="col-md-3">
+    <select name="day" class="form-select">
+      {% for i, d in [(0,'Lunes'),(1,'Martes'),(2,'Miércoles'),(3,'Jueves'),(4,'Viernes'),(5,'Sábado'),(6,'Domingo')] %}
+      <option value="{{i}}">{{d}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-2"><input type="time" name="start" class="form-control" required></div>
+  <div class="col-md-2"><input type="time" name="end" class="form-control" required></div>
+  <div class="col-md-2"><input type="number" name="step" min="5" step="5" value="30" class="form-control" placeholder="Paso (min)"></div>
+  <div class="col-md-2 d-grid"><button class="btn btn-primary">Agregar</button></div>
+</form>
+<table class="table table-dark table-hover align-middle">
+  <thead><tr><th>Día</th><th>Inicio</th><th>Fin</th><th>Paso</th><th></th></tr></thead>
+  <tbody>
+  {% for a in items %}
+    <tr>
+      <td>{{ ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'][a.day_of_week] }}</td>
+      <td>{{ a.start_time.strftime('%H:%M') }}</td>
+      <td>{{ a.end_time.strftime('%H:%M') }}</td>
+      <td>{{ a.step_minutes }} min</td>
+      <td>
+        <form method="post" action="{{ url_for('dashboard.availability_delete', aid=a.id) }}">
+          <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+        </form>
+      </td>
+    </tr>
+  {% else %}
+    <tr><td colspan="5" class="text-body-secondary">Sin disponibilidad aún.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

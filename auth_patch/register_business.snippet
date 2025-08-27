@@ -1,0 +1,5 @@
+# PATCH: after creating new_user, create a default Business if not exists
+from models import Business
+biz = Business(user_id=new_user.id, name="Mi negocio", slug=f"biz-{new_user.id}")
+db.session.add(biz)
+db.session.commit()
