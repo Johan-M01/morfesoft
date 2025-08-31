@@ -1,0 +1,64 @@
+services:
+  - type: web
+    name: morfesoft
+    env: python
+    plan: free
+    region: oregon
+    buildCommand: pip install -r requirements.txt && python init_db.py
+    startCommand: gunicorn app:app
+    healthCheckPath: /
+    autoDeploy: true
+
+    # Disco persistente para SQLite en producción (simple y sin complicaciones)
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
+
+    envVars:
+      # Seguridad
+      - key: SECRET_KEY
+        generateValue: true
+
+      # Base de datos: usa SQLite persistente por defecto
+      - key: SQLALCHEMY_DATABASE_URI
+        value: sqlite:////data/db.sqlite3
+
+      # Zona horaria y provider de pagos (por ahora desactivado)
+      - key: TIMEZONE
+        value: America/Santo_Domingo
+      - key: PAYMENT_PROVIDER
+        value: none
+
+      # SMTP (opcional – completa en el panel si quieres emails)
+      # - key: SMTP_HOST
+      #   value: smtp.gmail.com
+      # - key: SMTP_PORT
+      #   value: 587
+      # - key: SMTP_USERNAME
+      #   sync: false
+      # - key: SMTP_PASSWORD
+      #   sync: false
+      # - key: SMTP_USE_TLS
+      #   value: "1"
+      # - key: SMTP_FROM
+      #   value: you@gmail.com
+
+      # Stripe (opcional – cuando lo actives)
+      # - key: STRIPE_API_KEY
+      #   sync: false
+      # - key: STRIPE_WEBHOOK_SECRET
+      #   sync: false
+
+# OPCIONAL: si quieres Postgres en lugar de SQLite, descomenta esto,
+# crea la DB y cambia SQLALCHEMY_DATABASE_URI arriba usando fromDatabase.
+# databases:
+#   - name: morfesoft-db
+#     plan: free
+#     region: oregon
+#
+# Luego, en envVars:
+#   - key: SQLALCHEMY_DATABASE_URI
+#     fromDatabase:
+#       name: morfesoft-db
+#       property: connectionString
